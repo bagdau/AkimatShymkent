@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<html lang="kk">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable = no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <title>Шағымдық бет</title>
+
+        <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+        (function() {
+        emailjs.init("buZAeC6nAoho0IaNp"); // заменишь на свой PUBLIC KEY
+     })();
+    </script>
+
+        <style>
+            body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f4f6f9;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+header {
+  background-color: #389430;
+  color: white;
+  margin: 0px;
+  padding: 10px 10px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+main {
+  padding: 30px 20px;
+  max-width: 500px;
+  margin: 30px auto;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+h2 {
+  color: #003366;
+  font-size: 22px;
+  border-bottom: 2px solid #00a859;
+  padding-bottom: 5px;
+  margin-top: 40px;
+}
+
+form {
+  margin-top: 20px;
+}
+
+input[type="text"],
+textarea {
+  width: 90%;
+  padding: 12px 15px;
+  margin: 10px 0 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 15px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fafafa;
+}
+
+button {
+  background-color: #00a859;
+  color: white;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #007f47;
+}
+
+.problem {
+  background: #f0f8f4;
+  border-left: 5px solid #00a859;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 4px;
+}
+
+          </style>
+        </head>
+        <body>
+        
+            <header>
+                <h1>Портал Обратной Связи Акимата</h1>
+                <p>Отправьте жалобу или предложение напрямую</p>
+              </header>
+            
+              <main>
+                <h2>Оставить жалобу</h2>
+                <form id="feedback-form">
+                  <label for="name">Имя:</label>
+                  <input type="text" id="name" name="name" required>
+            
+                  <label for="complaint">Жалоба или предложение:</label>
+                  <textarea id="complaint" name="complaint" rows="5" required></textarea>
+            
+                  <button type="submit">Отправить</button>
+                </form>
+            
+                <h2>Отправленные жалобы</h2>
+                <div id="problems-list"></div>
+              </main>
+            
+              <script>
+                document.getElementById("feedback-form").addEventListener("submit", function(e) {
+                  e.preventDefault();
+            
+                  const name = document.getElementById("name").value;
+                  const complaint = document.getElementById("complaint").value;
+            
+                  if (!name || !complaint) {
+                    alert("Пожалуйста, заполните все поля.");
+                    return;
+                  }
+            
+                  // Отображаем жалобу на странице
+                  const entry = document.createElement("div");
+                  entry.className = "problem";
+                  entry.innerHTML = `<strong>${name}</strong>: ${complaint}`;
+                  document.getElementById("problems-list").appendChild(entry);
+            
+                  // Отправка на email
+                  emailjs.send("service_8t59j2g", "YOUR_TEMPLATE_ID", {
+                    from_name: name,
+                    message: complaint
+                  }).then(() => {
+                    alert("Жалоба успешно отправлена на email!");
+                  }, (error) => {
+                    alert("Ошибка при отправке: " + JSON.stringify(error));
+                  });
+            
+                  // Очистка формы
+                  this.reset();
+                });
+              </script>
+        
+        </body>
+</html>
