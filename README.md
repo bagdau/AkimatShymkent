@@ -1,0 +1,2 @@
+# AkimatShymkent
+the electronical government 
